@@ -6,7 +6,14 @@ services:
       context: .
       args:
         SUNO_COOKIE: ${SUNO_COOKIE}
-    volumes:
-      - ./public:/app/public
+    container_name: suno-api-suno-api-1
     ports:
       - "3000:3000"
+    volumes:
+      - ./public:/app/public
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
